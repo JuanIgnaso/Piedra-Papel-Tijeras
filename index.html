@@ -17,9 +17,9 @@
     <div id="container">
         <h1>Rock Paper Scissors</h1>
         <div id="game-box">
-            <h2 id="game_result">Its a draw!</h2>
-            <i class="fa-solid fa-hand" id="machine"></i>
-            <i class="fa-solid fa-hand" id="player"></i>
+            <h2 id="game_result"></h2>
+            <i class="fa-solid fa-hand" id="machine" ></i>
+            <i class="fa-solid fa-hand" id="player" ></i>
         </div>
         <div id="player_choice_container">
             <h3>Choose one!</h3>
@@ -38,32 +38,88 @@
         </div>
     </div>
     <script>
+        /*VARIABLES*/
         let result = document.querySelector('#game_result');
         let player_buttons = document.querySelectorAll('#actions button');
+        let player = document.getElementById('player');
+        let machine = document.getElementById('machine');
+        
+        /*OPTION BUTTONS*/
         player_buttons.forEach(element => {
             element.addEventListener('click',function(){
                 result.style.visibility = 'visible';
-                result.innerHTML = this.value;
                 console.log(this.value);
-                updateIcon(document.getElementById('player'),this.value);
+                //Player's move
+                updateIcon(player,this.value);
+            
+                //Computer's move
+                updateIcon(machine,computerMove());
+            
+                //Print result
+                printResult(player.getAttribute('value'),machine.getAttribute('value'));
             });
         });
 
+        //Function to make the machine choose an option
+        function computerMove(){
+            let computer_pick = Math.floor(Math.random() * (4 - 1) + 1);
+            switch(computer_pick){
+                case 1:
+                    return 'ROCK';
+                    break;
+                
+                case 2:
+                    return 'PAPER';
+                    break;
+                
+                case 3:
+                    return 'SCISSORS';
+                    break;
+            }
+        }
+
+        //Update the icons of the current game.
         function updateIcon(player,option){
             switch(option){
                 case 'ROCK':
                     player.setAttribute('class','fa-solid fa-hand-back-fist');
+                    player.setAttribute('value','ROCK');
                     break;
                 
                 case 'PAPER':
                     player.setAttribute('class','fa-solid fa-hand');
+                    player.setAttribute('value','PAPER');
                     break;
                 
                 case 'SCISSORS':
                     player.setAttribute('class','fa-solid fa-hand-scissors');
+                    player.setAttribute('value','SCISSORS');
                     break;
-        
             }
+        }
+
+        //Function to print the result of the current game
+        function printResult(player,machine){
+            result.style.visibility = 'visible';
+            if(player == machine){
+                
+               result.innerHTML = "IT'S A DRAW!"; 
+            }else{
+                switch(player){
+                    case 'ROCK':
+                        machine == 'PAPER' ? result.innerHTML = 'YOU LOOSE!' : result.innerHTML = 'YOU WIN!';
+                        break;
+                    
+                    case 'PAPER':
+                        machine == 'SCISSORS' ? result.innerHTML = 'YOU LOOSE!' : result.innerHTML = 'YOU WIN!';
+                        break;
+
+                    case 'SCISSORS':
+                        machine == 'ROCK' ? result.innerHTML = 'YOU LOOSE!' : result.innerHTML = 'YOU WIN!';
+                        break;
+                }
+            }
+            console.log(player + ' ' +  machine);
         }
 
     </script>
