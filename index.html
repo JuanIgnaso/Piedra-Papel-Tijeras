@@ -3,10 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="fontawesome/css/all.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rock Paper Scissors</title>
+    <!-- 
+
+        Piedra- <i class="fa-solid fa-hand-back-fist"></i>
+        Papel- <i class="fa-solid fa-hand"></i>
+        Tijera- <i class="fa-solid fa-hand-scissors"></i>
+     -->
 </head>
 <body>
-    
+    <div id="container">
+        <h1>Rock Paper Scissors</h1>
+        <div id="game-box">
+            <h2 id="game_result">Its a draw!</h2>
+            <i class="fa-solid fa-hand" id="machine"></i>
+            <i class="fa-solid fa-hand" id="player"></i>
+        </div>
+        <div id="player_choice_container">
+            <h3>Choose one!</h3>
+            <div id="actions">
+                <button type="button" value="ROCK">
+                    <i class="fa-solid fa-hand-back-fist"></i>
+                </button>
+                <button type="button" value="PAPER">
+                    <i class="fa-solid fa-hand"></i>
+                </button>
+                <button type="button" value="SCISSORS">
+                    <i class="fa-solid fa-hand-scissors"></i>
+                </button>
+            </div>
+            
+        </div>
+    </div>
+    <script>
+        let result = document.querySelector('#game_result');
+        let player_buttons = document.querySelectorAll('#actions button');
+        player_buttons.forEach(element => {
+            element.addEventListener('click',function(){
+                result.style.visibility = 'visible';
+                result.innerHTML = this.value;
+                console.log(this.value);
+                updateIcon(document.getElementById('player'),this.value);
+            });
+        });
+
+        function updateIcon(player,option){
+            switch(option){
+                case 'ROCK':
+                    player.setAttribute('class','fa-solid fa-hand-back-fist');
+                    break;
+                
+                case 'PAPER':
+                    player.setAttribute('class','fa-solid fa-hand');
+                    break;
+                
+                case 'SCISSORS':
+                    player.setAttribute('class','fa-solid fa-hand-scissors');
+                    break;
+        
+            }
+        }
+
+    </script>
 </body>
 </html>
