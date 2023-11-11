@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
     <!-- 
+        Icons for the player and computer options:
 
         Piedra- <i class="fa-solid fa-hand-back-fist"></i>
         Papel- <i class="fa-solid fa-hand"></i>
@@ -17,9 +18,22 @@
     <div id="container">
         <h1>Rock Paper Scissors</h1>
         <div id="game-box">
-            <h2 id="game_result"></h2>
-            <i class="fa-solid fa-hand" id="machine" ></i>
-            <i class="fa-solid fa-hand" id="player" ></i>
+            <!-- GAME SCORE -->
+            <div id="score">
+                <h2>SCORE</h2>
+                <h3>cpu</h3>
+                <span>6</span>
+                <div id="divisor"></div>
+                <span>0</span>
+                <h3>YOU</h3>
+            </div>
+
+            <!-- GAME SCREEN -->
+            <div id="screen">
+                <h2 id="game_result">*</h2>
+                <i class="fa-solid fa-hand" id="machine" ></i>
+                <i class="fa-solid fa-hand" id="player" ></i>
+            </div>
         </div>
         <div id="player_choice_container">
             <h3>Choose one!</h3>

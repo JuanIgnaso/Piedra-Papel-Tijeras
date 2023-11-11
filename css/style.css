@@ -2,9 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Kenia&display=swap');
 
 
+/*Fuente de colores*/
+@import url('https://fonts.googleapis.com/css2?family=Nabla&display=swap');
+
 html,body{
     width: 100%;
     height: 100%;
+    font-family: 'Nabla', display;
+}
+body{
+    background-color:#895B66;
 }
 
 h1,h2,h3,h4{
@@ -15,7 +22,14 @@ h1,h2,h3,h4{
 }
 
 #game-box{
-    background-color: rgb(207, 207, 207);
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+
+#game-box #screen{
+    position: relative;
+    background-color:#49DEB4;
     width: 70%;
     margin: 0 auto;
     display: flex;
@@ -23,8 +37,29 @@ h1,h2,h3,h4{
     align-items: center;
     gap: 10px;
     padding: 1%;
+    padding-bottom: 5%;
 }
 
+#score{
+    left: 1%;
+    position: absolute;
+    width: 12%;
+    display: flex;
+    flex-direction: column;
+    background-color: #cb49de;
+}
+
+#score h2,h3{
+    color:#49deb4;
+}
+
+#score *{
+    align-self: center;
+}
+
+#score span{
+    font-size: 1.125rem;
+}
 
 #game_result{
     visibility: hidden;
@@ -34,12 +69,12 @@ h1,h2,h3,h4{
 
 #game-box i{
     font-size: 4rem;
-    color:darkslategrey;
+    color:#CB49DE;
 }
 
 #container{
     width: 500px;
-    background-color: antiquewhite;
+    background-color:#49DE60;
     margin: 0 auto;
     padding: 1%;
 }
@@ -48,27 +83,72 @@ h1,h2,h3,h4{
     box-sizing: border-box;
 }
 
-#container h1{
+#container h1,#player_choice_container h3{
 text-align: center;
+color:#DE496C;
 }
 
 #player_choice_container{
     width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     gap: 10px;
 }
 
+
+
 #player_choice_container button{
+    position: relative;
    display: flex;
    flex-direction: column;
+   background-color:#CB49DE;
+   color: #49deb4;
+   border:unset;
+   border-radius: 5px;
+    padding:2%;
+
 }
 
-#actions{
+#player_choice_container button:hover{
+    animation-name: rotate;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards; 
+}
+
+/*
+
+'animation-fill-mode: forwards' Mantiene el último frame de la animación 
+hasta que el usuario deja de interactuar con el elemento
+
+*/
+
+@keyframes rotate {
+    from{
+    box-shadow: 0px 0px 0px 0px unset;
+    rotate: 0deg;
+    bottom: 0px;};
+
+    /*h-offset v-offset blur spread color */
+    to{
+    box-shadow: 0px 0px 8px 5px #DE496C;
+    rotate: 30deg;
+    bottom: 10px;
+    };
+}
+
+
+
+#actions {
+    position: relative;
     display: flex;
     gap: 3%;
-}
+    width: 100%;
+    justify-content: center;
+  }
+
 
 #player_choice_container button i{
     font-size: 3rem;
