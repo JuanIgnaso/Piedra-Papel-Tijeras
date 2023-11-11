@@ -53,6 +53,12 @@ h1,h2,h3,h4{
     color:#49deb4;
 }
 
+#scoreboard{
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;  
+}
+
 #score *{
     align-self: center;
 }
@@ -107,11 +113,15 @@ color:#DE496C;
    color: #49deb4;
    border:unset;
    border-radius: 5px;
-    padding:2%;
+   padding:2%;
 
 }
 
-#player_choice_container button:hover{
+#actions button{
+    visibility: hidden;
+}
+
+#actions button:hover{
     animation-name: rotate;
     animation-duration: 0.5s;
     animation-timing-function: ease-out;

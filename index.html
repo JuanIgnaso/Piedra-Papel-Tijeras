@@ -21,11 +21,12 @@
             <!-- GAME SCORE -->
             <div id="score">
                 <h2>SCORE</h2>
-                <h3>cpu</h3>
-                <span>6</span>
-                <div id="divisor"></div>
-                <span>0</span>
-                <h3>YOU</h3>
+                <div id="scoreboard">
+                    <h3>cpu</h3>
+                    <span id="cpu_score">0</span>
+                    <span id="player_score">0</span>
+                    <h3>YOU</h3>
+                </div>
             </div>
 
             <!-- GAME SCREEN -->
@@ -36,7 +37,7 @@
             </div>
         </div>
         <div id="player_choice_container">
-            <h3>Choose one!</h3>
+            <h3>Press 'Start game' to play</h3>
             <div id="actions">
                 <button type="button" value="ROCK">
                     <i class="fa-solid fa-hand-back-fist"></i>
@@ -48,31 +49,78 @@
                     <i class="fa-solid fa-hand-scissors"></i>
                 </button>
             </div>
-            
+        <button type="button" onclick="confirmGame()">Start game</button>
+        <button type="button" onclick="exitGame()">Exit Game</button>
         </div>
+
     </div>
     <script>
+
+        /*CONFIRM WINDOW*/
+ 
+
         /*VARIABLES*/
+        let gameInProgress = false;
         let result = document.querySelector('#game_result');
         let player_buttons = document.querySelectorAll('#actions button');
-        let player = document.getElementById('player');
-        let machine = document.getElementById('machine');
-        
+        let player = {
+            choice:document.getElementById('player'),
+            score:0
+        };
+        let machine = {
+            choice: document.getElementById('machine'),
+            score: 0
+        };
+
+        /*START OR CANCEL GAME*/
+        function confirmGame(){
+            gameInProgress = confirm('Do you wish to Start the game?.');
+            gameInProgress ? initiateGame() : alert('Game canceled');
+        }
+
         /*OPTION BUTTONS*/
-        player_buttons.forEach(element => {
-            element.addEventListener('click',function(){
-                result.style.visibility = 'visible';
-                console.log(this.value);
-                //Player's move
-                updateIcon(player,this.value);
-            
-                //Computer's move
-                updateIcon(machine,computerMove());
-            
-                //Print result
-                printResult(player.getAttribute('value'),machine.getAttribute('value'));
+       function initiateGame(){
+        //Make scoreboard vissible for player
+        document.getElementById('scoreboard').style.visibility = 'visible';
+            if(gameInProgress){
+                console.log(gameInProgress);
+
+                document.querySelector('#player_choice_container h3').innerHTML = 'Choose one!';
+
+                player_buttons.forEach(element => {
+                element.style.visibility = 'visible';
+                element.addEventListener('click', function start(){
+                    result.style.visibility = 'visible';
+
+                    //Player's move
+                    updateIcon(player,this.value);
+                
+                    //Computer's move
+                    updateIcon(machine,computerMove());
+                
+                    //Print result
+                    printResult(player.choice.getAttribute('value'),machine.choice.getAttribute('value'));
+                });
             });
+        }
+       }
+
+       
+       //This function exists the game
+       exitGame = () => {
+        gameInProgress = false;
+        player_buttons.forEach(element => {
+            element.style.visibility = 'hidden';
+            document.querySelector('#player_choice_container h3').innerHTML = 'Game Canceled';
         });
+        //Sets timeout to display the message to press start to play
+        setTimeout(()=>{
+            document.querySelector('#player_choice_container h3').innerHTML = 'Press "Start game" to play';
+            },5000);
+        console.log(gameInProgress);
+    };
+        
+
 
         //Function to make the machine choose an option
         function computerMove(){
@@ -96,18 +144,18 @@
         function updateIcon(player,option){
             switch(option){
                 case 'ROCK':
-                    player.setAttribute('class','fa-solid fa-hand-back-fist');
-                    player.setAttribute('value','ROCK');
+                    player.choice.setAttribute('class','fa-solid fa-hand-back-fist');
+                    player.choice.setAttribute('value','ROCK');
                     break;
                 
                 case 'PAPER':
-                    player.setAttribute('class','fa-solid fa-hand');
-                    player.setAttribute('value','PAPER');
+                    player.choice.setAttribute('class','fa-solid fa-hand');
+                    player.choice.setAttribute('value','PAPER');
                     break;
                 
                 case 'SCISSORS':
-                    player.setAttribute('class','fa-solid fa-hand-scissors');
-                    player.setAttribute('value','SCISSORS');
+                    player.choice.setAttribute('class','fa-solid fa-hand-scissors');
+                    player.choice.setAttribute('value','SCISSORS');
                     break;
             }
         }
@@ -133,7 +181,6 @@
                         break;
                 }
             }
-            console.log(player + ' ' +  machine);
         }
 
     </script>
