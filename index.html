@@ -22,7 +22,7 @@
             <div id="score">
                 <h2>SCORE</h2>
                 <div id="scoreboard">
-                    <h3>cpu</h3>
+                    <h3>CPU</h3>
                     <span id="cpu_score">0</span>
                     <span id="player_score">0</span>
                     <h3>YOU</h3>
@@ -49,20 +49,21 @@
                     <i class="fa-solid fa-hand-scissors"></i>
                 </button>
             </div>
-        <button type="button" onclick="confirmGame()">Start game</button>
-        <button type="button" onclick="exitGame()">Exit Game</button>
+            <div id="game_options">
+                <button id="start" type="button" onclick="confirmGame()">Start game</button>
+                <button id="cancel" type="button" onclick="exitGame()">Exit Game</button>
+            </div>
         </div>
 
     </div>
     <script>
-
-        /*CONFIRM WINDOW*/
- 
-
         /*VARIABLES*/
         let gameInProgress = false;
         let result = document.querySelector('#game_result');
         let player_buttons = document.querySelectorAll('#actions button');
+        let gameMessage = document.querySelector('#player_choice_container h3');
+        
+        /*PLAYERS*/
         let player = {
             choice:document.getElementById('player'),
             score:0
@@ -83,10 +84,7 @@
         //Make scoreboard vissible for player
         document.getElementById('scoreboard').style.visibility = 'visible';
             if(gameInProgress){
-                console.log(gameInProgress);
-
                 document.querySelector('#player_choice_container h3').innerHTML = 'Choose one!';
-
                 player_buttons.forEach(element => {
                 element.style.visibility = 'visible';
                 element.addEventListener('click', function start(){
@@ -111,13 +109,12 @@
         gameInProgress = false;
         player_buttons.forEach(element => {
             element.style.visibility = 'hidden';
-            document.querySelector('#player_choice_container h3').innerHTML = 'Game Canceled';
+            gameMessage.innerHTML = 'Game Canceled';
         });
         //Sets timeout to display the message to press start to play
         setTimeout(()=>{
-            document.querySelector('#player_choice_container h3').innerHTML = 'Press "Start game" to play';
+            gameMessage.innerHTML = 'Press "Start game" to play';
             },5000);
-        console.log(gameInProgress);
     };
         
 

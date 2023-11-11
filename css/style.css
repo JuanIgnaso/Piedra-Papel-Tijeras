@@ -59,6 +59,11 @@ h1,h2,h3,h4{
     flex-direction: column;  
 }
 
+#score h2{
+    font-family: 'Nabla', display;
+    font-size: 1.2rem;
+}
+
 #score *{
     align-self: center;
 }
@@ -164,3 +169,41 @@ hasta que el usuario deja de interactuar con el elemento
     font-size: 3rem;
  }
 
+#start,#cancel{
+    position: relative;
+    font-family: 'Nabla', display;
+    font-size: 1.25rem;
+    z-index: 10;
+}
+
+
+
+#game_options{
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1%;
+}
+
+#game_options button:hover{
+    animation-name: game_options_Anim;
+    animation-duration: 0.75s;
+    animation-timing-function:ease-in-out;
+}
+
+
+@keyframes game_options_Anim {
+    0%,100%{
+    transform:scale(1);
+    box-shadow: 0px 0px 0px 0px unset;
+    z-index: 10;
+    };
+    50%{
+    transform:scale(1.15);
+    box-shadow: 0px 0px 8px 5px #000;
+    z-index: 20;
+    };
+    
+}
