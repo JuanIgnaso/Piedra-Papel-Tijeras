@@ -39,13 +39,13 @@
         <div id="player_choice_container">
             <h3>Press 'Start game' to play</h3>
             <div id="actions">
-                <button type="button" value="ROCK">
+                <button type="button" value="ROCK" onclick="updateIcon(player,this.value);">
                     <i class="fa-solid fa-hand-back-fist"></i>
                 </button>
-                <button type="button" value="PAPER">
+                <button type="button" value="PAPER" onclick="updateIcon(player,this.value);">
                     <i class="fa-solid fa-hand"></i>
                 </button>
-                <button type="button" value="SCISSORS">
+                <button type="button" value="SCISSORS" onclick="updateIcon(player,this.value);">
                     <i class="fa-solid fa-hand-scissors"></i>
                 </button>
             </div>
@@ -84,33 +84,35 @@
         //Make scoreboard vissible for player
         document.getElementById('scoreboard').style.visibility = 'visible';
             if(gameInProgress){
+                
                 document.querySelector('#player_choice_container h3').innerHTML = 'Choose one!';
                 player_buttons.forEach(element => {
                 element.style.visibility = 'visible';
-                element.addEventListener('click', function start(){
-                    result.style.visibility = 'visible';
-
-                    //Player's move
-                    updateIcon(player,this.value);
-                
-                    //Computer's move
-                    updateIcon(machine,computerMove());
-                
-                    //Print result
-                    printResult(player.choice.getAttribute('value'),machine.choice.getAttribute('value'));
-                });
+                element.addEventListener('click',doComputerMove);
+                element.addEventListener('click',printResult);
             });
         }
        }
 
-       
+       function doComputerMove(){updateIcon(machine,computerMove());}
+         
        //This function exists the game
        exitGame = () => {
+        result.style.visibility = 'hidden';
+        player.score = 0;
+        machine.score = 0;
+        document.getElementById('player_score').innerHTML = player.score;
+        document.getElementById('cpu_score').innerHTML = machine.score;
+        document.getElementById('scoreboard').style.visibility = 'hidden';
         gameInProgress = false;
+        console.clear('Game restarted');
         player_buttons.forEach(element => {
             element.style.visibility = 'hidden';
             gameMessage.innerHTML = 'Game Canceled';
+            element.removeEventListener('click',printResult);
+            element.removeEventListener('click',doComputerMove);
         });
+        
         //Sets timeout to display the message to press start to play
         setTimeout(()=>{
             gameMessage.innerHTML = 'Press "Start game" to play';
@@ -139,6 +141,7 @@
 
         //Update the icons of the current game.
         function updateIcon(player,option){
+            
             switch(option){
                 case 'ROCK':
                     player.choice.setAttribute('class','fa-solid fa-hand-back-fist');
@@ -158,26 +161,49 @@
         }
 
         //Function to print the result of the current game
-        function printResult(player,machine){
-            result.style.visibility = 'visible';
-            if(player == machine){
+        function printResult(){
+            result.style.visibility == 'hidden' ? result.style.visibility = 'visible' : '';
+            
+            if(player.choice.getAttribute('value') == machine.choice.getAttribute('value')){
                 
                result.innerHTML = "IT'S A DRAW!"; 
             }else{
-                switch(player){
-                    case 'ROCK':
-                        machine == 'PAPER' ? result.innerHTML = 'YOU LOOSE!' : result.innerHTML = 'YOU WIN!';
-                        break;
-                    
-                    case 'PAPER':
-                        machine == 'SCISSORS' ? result.innerHTML = 'YOU LOOSE!' : result.innerHTML = 'YOU WIN!';
-                        break;
-
-                    case 'SCISSORS':
-                        machine == 'ROCK' ? result.innerHTML = 'YOU LOOSE!' : result.innerHTML = 'YOU WIN!';
-                        break;
+                if(player.choice.getAttribute('value') == 'ROCK'){
+                    if(machine.choice.getAttribute('value') == 'PAPER'){
+                        updateScore(machine,document.getElementById('cpu_score'),'YOU LOOSE!');
+                    }else{
+                        updateScore(player,document.getElementById('player_score'),'YOU WIN!');
+                    }
+                }
+                if(player.choice.getAttribute('value') == 'PAPER'){
+                    if(machine.choice.getAttribute('value') == 'SCISSORS'){
+                        updateScore(machine,document.getElementById('cpu_score'),'YOU LOOSE!');
+                    }else{
+                        updateScore(player,document.getElementById('player_score'),'YOU WIN!');
+                    }
+                }
+                if(player.choice.getAttribute('value') == 'SCISSORS'){
+                    if(machine.choice.getAttribute('value') == 'ROCK'){
+                        updateScore(machine,document.getElementById('cpu_score'),'YOU LOOSE!');
+                    }else{
+                        updateScore(player,document.getElementById('player_score'),'YOU WIN!');
+                    }
                 }
             }
+            console.log('Player: ' + player.score + ' - ' + machine.score + ' :Machine');
+        }
+
+        /*Updates the scoreboard of the game.
+        *
+        *-playerScore -> the player to increase the score count.
+        *-ScoreboardNumber -> the id or element that references the number shown on the scoreboard
+        *Ex(if this updates the player, should be the element that visualy represents its score)
+        *-message -> message to be shown on the result element.
+        */
+        function updateScore(playerScore,ScoreboardNumber,message){
+            playerScore.score += 1;
+            ScoreboardNumber.innerHTML = playerScore.score; 
+            result.innerHTML = message;
         }
 
     </script>
