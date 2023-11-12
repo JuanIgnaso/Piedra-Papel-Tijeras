@@ -97,15 +97,19 @@
        function doComputerMove(){updateIcon(machine,computerMove());}
          
        //This function exists the game
-       exitGame = () => {
+       function exitGame(){
         result.style.visibility = 'hidden';
+
+        //Resets and hiddes scoreboard
         player.score = 0;
         machine.score = 0;
         document.getElementById('player_score').innerHTML = player.score;
         document.getElementById('cpu_score').innerHTML = machine.score;
         document.getElementById('scoreboard').style.visibility = 'hidden';
         gameInProgress = false;
-        console.clear('Game restarted');
+
+        //Removes eventlisteners previously added
+        console.clear();
         player_buttons.forEach(element => {
             element.style.visibility = 'hidden';
             gameMessage.innerHTML = 'Game Canceled';
@@ -116,7 +120,7 @@
         //Sets timeout to display the message to press start to play
         setTimeout(()=>{
             gameMessage.innerHTML = 'Press "Start game" to play';
-            },5000);
+        },5000);
     };
         
 
