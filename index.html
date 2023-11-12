@@ -101,12 +101,7 @@
         result.style.visibility = 'hidden';
 
         //Resets and hiddes scoreboard
-        player.score = 0;
-        machine.score = 0;
-        document.getElementById('player_score').innerHTML = player.score;
-        document.getElementById('cpu_score').innerHTML = machine.score;
-        document.getElementById('scoreboard').style.visibility = 'hidden';
-        gameInProgress = false;
+        restartScoreBoard();
 
         //Removes eventlisteners previously added
         console.clear();
@@ -122,6 +117,16 @@
             gameMessage.innerHTML = 'Press "Start game" to play';
         },5000);
     };
+
+    
+    function restartScoreBoard(){
+        player.score = 0;
+        machine.score = 0;
+        document.getElementById('player_score').innerHTML = player.score;
+        document.getElementById('cpu_score').innerHTML = machine.score;
+        document.getElementById('scoreboard').style.visibility = 'hidden';
+        gameInProgress = false;
+    }
         
 
 
