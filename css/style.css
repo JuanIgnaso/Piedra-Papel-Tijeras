@@ -165,6 +165,31 @@ hasta que el usuario deja de interactuar con el elemento
   }
 
 
+  #match_numbers{
+    border: 1px solid;
+    width: 100%;
+    display: grid;
+    text-align: center;
+    grid-template-columns: auto auto auto;
+  }
+
+    #match_numbers button{
+        visibility: visible;
+        grid-column: 2/3;
+    }
+
+  #match_numbers h3{
+    grid-column: 1/4;
+  }
+
+
+  .choice-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
 #player_choice_container button i{
     font-size: 3rem;
  }

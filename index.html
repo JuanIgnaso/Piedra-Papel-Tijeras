@@ -38,7 +38,30 @@
         </div>
         <div id="player_choice_container">
             <h3>Press 'Start game' to play</h3>
+
             <div id="actions">
+
+                                            <!-- GAME SELECTOR -->
+                        <div id="match_numbers">
+                            <h3>Select Games per Match</h3>
+                                <div class="choice-container">
+                                    <label for="3games">3 Games</label>
+                                    <input type="radio" name="numGames" id="3games" value="3">
+                                </div>
+                
+                                <div class="choice-container">
+                                    <label for="3games">5 Games</label>
+                                    <input type="radio" name="numGames" id="5games" value="5">
+                                 </div>
+                
+                                 <div class="choice-container">  
+                                    <label for="3games">7 Games</label>
+                                    <input type="radio" name="numGames" id="7games" value="7">
+                                </div>
+
+                                <button type="button" onclick="checkNumberOfGames()">Confirm</button>
+                        </div>
+
                 <button type="button" value="ROCK" onclick="updateIcon(player,this.value);">
                     <i class="fa-solid fa-hand-back-fist"></i>
                 </button>
@@ -62,7 +85,25 @@
         let result = document.querySelector('#game_result');
         let player_buttons = document.querySelectorAll('#actions button');
         let gameMessage = document.querySelector('#player_choice_container h3');
+        let chkboxes = document.querySelectorAll('input[type=radio]');
         
+        /*CONFIRM THE NUMBER OF GAMES*/
+        let numberOfGames = undefined;
+
+
+        chkboxes.forEach(element => {
+            element.addEventListener('change',function(){
+                element.checked ? numberOfGames = Number(element.value) : '';
+                console.log(numberOfGames);
+            })
+        });
+
+        /*Checks if there is any number of games selected*/
+        function checkNumberOfGames(){
+            numberOfGames == undefined ? console.log('Selecciona un número de juegos') : console.log(`Seleccionado: ${numberOfGames} Partidas`);
+        }
+
+
         /*PLAYERS*/
         let player = {
             choice:document.getElementById('player'),
@@ -78,6 +119,12 @@
             gameInProgress = confirm('Do you wish to Start the game?.');
             gameInProgress ? initiateGame() : alert('Game canceled');
         }
+
+
+
+
+
+
 
         /*OPTION BUTTONS*/
        function initiateGame(){
