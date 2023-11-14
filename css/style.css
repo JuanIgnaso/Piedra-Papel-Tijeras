@@ -59,7 +59,7 @@ h1,h2,h3,h4{
     flex-direction: column;  
 }
 
-#score h2{
+#score h2,#cancel,#confirm,#cancel_game{
     font-family: 'Nabla', display;
     font-size: 1.2rem;
 }
@@ -70,6 +70,11 @@ h1,h2,h3,h4{
 
 #score span{
     font-size: 1.125rem;
+}
+
+#number_of_games{
+   font-family: 'Nabla', display;
+   font-size: 0.75rem;
 }
 
 #game_result{
@@ -110,7 +115,7 @@ color:#DE496C;
 
 
 
-#player_choice_container button{
+#player_choice_container button,#confirm{
     position: relative;
    display: flex;
    flex-direction: column;
@@ -121,12 +126,15 @@ color:#DE496C;
    padding:2%;
 
 }
-
-#actions button{
+/**************************/
+#actions .game_button{
     visibility: hidden;
+    display: none;
 }
 
-#actions button:hover{
+
+
+#actions .game_button:hover{
     animation-name: rotate;
     animation-duration: 0.5s;
     animation-timing-function: ease-out;
@@ -166,16 +174,33 @@ hasta que el usuario deja de interactuar con el elemento
 
 
   #match_numbers{
-    border: 1px solid;
+    overflow-y:scroll;
     width: 100%;
     display: grid;
+    visibility: hidden;
     text-align: center;
     grid-template-columns: auto auto auto;
   }
 
-    #match_numbers button{
+  #cancel_game,#confirm{
+    display: block;
+}
+
+  #select_buttons{
+    grid-column: 1/4;
+    display: flex;
+    justify-content: center;
+    column-gap: 3%;
+    align-items: center;
+  }
+
+    /* #match_numbers  #confirm{
+        /*visibility: visible;*/
+        /*grid-column: 1/2;
+    } */
+
+    #match_numbers #cancel{
         visibility: visible;
-        grid-column: 2/3;
     }
 
   #match_numbers h3{
@@ -194,7 +219,7 @@ hasta que el usuario deja de interactuar con el elemento
     font-size: 3rem;
  }
 
-#start,#cancel{
+#start,#cancel_game{
     position: relative;
     font-family: 'Nabla', display;
     font-size: 1.25rem;

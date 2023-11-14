@@ -26,6 +26,7 @@
                     <span id="cpu_score">0</span>
                     <span id="player_score">0</span>
                     <h3>YOU</h3>
+                    <h3 id="number_of_games"></h3>
                 </div>
             </div>
 
@@ -43,7 +44,6 @@
 
                                             <!-- GAME SELECTOR -->
                         <div id="match_numbers">
-                            <h3>Select Games per Match</h3>
                                 <div class="choice-container">
                                     <label for="3games">3 Games</label>
                                     <input type="radio" name="numGames" id="3games" value="3">
@@ -58,22 +58,25 @@
                                     <label for="3games">7 Games</label>
                                     <input type="radio" name="numGames" id="7games" value="7">
                                 </div>
-
-                                <button type="button" onclick="checkNumberOfGames()">Confirm</button>
+                                <div id="select_buttons">
+                                    <button type="button" onclick="exitGame()" id="cancel_game">Cancel</button>
+                                    <button type="button" id="confirm" onclick="confirmGame()">Confirm</button>
+                                </div>
+                                
                         </div>
 
-                <button type="button" value="ROCK" onclick="updateIcon(player,this.value);">
+                <button type="button" class="game_button" value="ROCK" onclick="updateIcon(player,this.value);">
                     <i class="fa-solid fa-hand-back-fist"></i>
                 </button>
-                <button type="button" value="PAPER" onclick="updateIcon(player,this.value);">
+                <button type="button" class="game_button" value="PAPER" onclick="updateIcon(player,this.value);">
                     <i class="fa-solid fa-hand"></i>
                 </button>
-                <button type="button" value="SCISSORS" onclick="updateIcon(player,this.value);">
+                <button type="button" class="game_button" value="SCISSORS" onclick="updateIcon(player,this.value);">
                     <i class="fa-solid fa-hand-scissors"></i>
                 </button>
             </div>
             <div id="game_options">
-                <button id="start" type="button" onclick="confirmGame()">Start game</button>
+                <button id="start" type="button" onclick="showGameSelector()">Start game</button>
                 <button id="cancel" type="button" onclick="exitGame()">Exit Game</button>
             </div>
         </div>
@@ -83,12 +86,23 @@
         /*VARIABLES*/
         let gameInProgress = false;
         let result = document.querySelector('#game_result');
-        let player_buttons = document.querySelectorAll('#actions button');
+        let player_buttons = document.querySelectorAll('#actions .game_button');
         let gameMessage = document.querySelector('#player_choice_container h3');
         let chkboxes = document.querySelectorAll('input[type=radio]');
         
         /*CONFIRM THE NUMBER OF GAMES*/
         let numberOfGames = undefined;
+
+        /*PLAYERS*/
+        let player = {
+            choice:document.getElementById('player'),
+            score:0
+        };
+
+        let machine = {
+            choice: document.getElementById('machine'),
+            score: 0
+        };
 
 
         chkboxes.forEach(element => {
@@ -104,37 +118,43 @@
         }
 
 
-        /*PLAYERS*/
-        let player = {
-            choice:document.getElementById('player'),
-            score:0
-        };
-        let machine = {
-            choice: document.getElementById('machine'),
-            score: 0
-        };
+
 
         /*START OR CANCEL GAME*/
         function confirmGame(){
-            gameInProgress = confirm('Do you wish to Start the game?.');
-            gameInProgress ? initiateGame() : alert('Game canceled');
+            if(numberOfGames == undefined){
+                console.log('selecciona un juego');
+            }else{
+                gameInProgress = confirm('Do you wish to Start the game?.');
+                gameInProgress ? initiateGame() : alert('Game canceled');
+            }
+
         }
 
 
 
-
+        function showGameSelector(){
+            gameMessage.innerHTML = 'Select the number of matches';
+            document.getElementById('match_numbers').style.visibility = 'visible';
+            document.getElementById('cancel_game').style.display= 'block';
+            document.getElementById('confirm').style.display = 'block';
+        }
 
 
 
         /*OPTION BUTTONS*/
        function initiateGame(){
         //Make scoreboard vissible for player
+        document.getElementById('number_of_games').innerHTML = `${numberOfGames} Games`;
+
         document.getElementById('scoreboard').style.visibility = 'visible';
             if(gameInProgress){
-                
+                document.getElementById('match_numbers').style.display = 'none';
                 document.querySelector('#player_choice_container h3').innerHTML = 'Choose one!';
                 player_buttons.forEach(element => {
                 element.style.visibility = 'visible';
+                element.style.display = 'block';
+                element.removeAttribute('disabled');
                 element.addEventListener('click',doComputerMove);
                 element.addEventListener('click',printResult);
             });
@@ -154,10 +174,14 @@
         console.clear();
         player_buttons.forEach(element => {
             element.style.visibility = 'hidden';
+            element.style.display = 'none';
             gameMessage.innerHTML = 'Game Canceled';
             element.removeEventListener('click',printResult);
             element.removeEventListener('click',doComputerMove);
         });
+
+        document.getElementById('match_numbers').style.visibility = 'hidden';
+        document.getElementById('match_numbers').style.display = 'grid';
         
         //Sets timeout to display the message to press start to play
         setTimeout(()=>{
@@ -218,7 +242,9 @@
 
         //Function to print the result of the current game
         function printResult(){
-            result.style.visibility == 'hidden' ? result.style.visibility = 'visible' : '';
+            
+             result.style.visibility = 'visible';
+            
             
             if(player.choice.getAttribute('value') == machine.choice.getAttribute('value')){
                 
@@ -244,6 +270,15 @@
                     }else{
                         updateScore(player,document.getElementById('player_score'),'YOU WIN!');
                     }
+                }
+                //Case Someone Wins to print the result and disable game buttons
+                if(player.score == numberOfGames || machine.score == numberOfGames){
+                    let winner = player.score == numberOfGames ? 'Player' : 'CPU';
+                    result.innerHTML = `GAME OVER: ${winner} WINS`;
+                    player_buttons.forEach(element => {
+                element.setAttribute('disabled','true');
+
+            });
                 }
             }
             console.log('Player: ' + player.score + ' - ' + machine.score + ' :Machine');
