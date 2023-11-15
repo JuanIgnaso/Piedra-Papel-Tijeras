@@ -84,11 +84,12 @@
     </div>
     <script>
         /*VARIABLES*/
-        let gameInProgress = false;
         let result = document.querySelector('#game_result');
         let player_buttons = document.querySelectorAll('#actions .game_button');
         let gameMessage = document.querySelector('#player_choice_container h3');
         let chkboxes = document.querySelectorAll('input[type=radio]');
+        let cpu_score = document.getElementById('cpu_score'); //Cpu number of the scoreboard
+        let player_score = document.getElementById('player_score'); //player number of the scoreboard
         
         /*CONFIRM THE NUMBER OF GAMES*/
         let numberOfGames = undefined;
@@ -105,34 +106,24 @@
         };
 
 
-        chkboxes.forEach(element => {
+        window.onload = chkboxes.forEach(element => {
             element.addEventListener('change',function(){
                 element.checked ? numberOfGames = Number(element.value) : '';
                 console.log(numberOfGames);
             })
         });
 
-        /*Checks if there is any number of games selected*/
-        function checkNumberOfGames(){
-            numberOfGames == undefined ? console.log('Selecciona un número de juegos') : console.log(`Seleccionado: ${numberOfGames} Partidas`);
-        }
-
-
-
-
         /*START OR CANCEL GAME*/
         function confirmGame(){
             if(numberOfGames == undefined){
-                console.log('selecciona un juego');
+                alert('selecciona un juego');
             }else{
-                gameInProgress = confirm('Do you wish to Start the game?.');
-                gameInProgress ? initiateGame() : alert('Game canceled');
+                initiateGame();
             }
-
         }
 
 
-
+        //Shows the game selector on screen
         function showGameSelector(){
             gameMessage.innerHTML = 'Select the number of matches';
             document.getElementById('match_numbers').style.visibility = 'visible';
@@ -141,14 +132,13 @@
         }
 
 
-
         /*OPTION BUTTONS*/
        function initiateGame(){
         //Make scoreboard vissible for player
         document.getElementById('number_of_games').innerHTML = `${numberOfGames} Games`;
 
         document.getElementById('scoreboard').style.visibility = 'visible';
-            if(gameInProgress){
+            
                 document.getElementById('match_numbers').style.display = 'none';
                 document.querySelector('#player_choice_container h3').innerHTML = 'Choose one!';
                 player_buttons.forEach(element => {
@@ -158,13 +148,12 @@
                 element.addEventListener('click',doComputerMove);
                 element.addEventListener('click',printResult);
             });
-        }
        }
 
        function doComputerMove(){updateIcon(machine,computerMove());}
          
        //This function exists the game
-       function exitGame(){
+    function exitGame(){
         result.style.visibility = 'hidden';
 
         //Resets and hiddes scoreboard
@@ -189,17 +178,12 @@
         },5000);
     };
 
-    
+    //Reestarts scoreboard before each game starts
     function restartScoreBoard(){
-        player.score = 0;
-        machine.score = 0;
-        document.getElementById('player_score').innerHTML = player.score;
-        document.getElementById('cpu_score').innerHTML = machine.score;
+        player_score.innerHTML = cpu_score.innerHTML = machine.score = player.score = 0;
         document.getElementById('scoreboard').style.visibility = 'hidden';
-        gameInProgress = false;
     }
         
-
 
         //Function to make the machine choose an option
         function computerMove(){
@@ -242,46 +226,30 @@
 
         //Function to print the result of the current game
         function printResult(){
-            
-             result.style.visibility = 'visible';
-            
+
+            result.style.visibility = 'visible';
             
             if(player.choice.getAttribute('value') == machine.choice.getAttribute('value')){
-                
                result.innerHTML = "IT'S A DRAW!"; 
-            }else{
+            }else{ //If its not a DRAW...
                 if(player.choice.getAttribute('value') == 'ROCK'){
-                    if(machine.choice.getAttribute('value') == 'PAPER'){
-                        updateScore(machine,document.getElementById('cpu_score'),'YOU LOOSE!');
-                    }else{
-                        updateScore(player,document.getElementById('player_score'),'YOU WIN!');
-                    }
+                    machine.choice.getAttribute('value') == 'PAPER' ? updateScore(machine,cpu_score,'YOU LOOSE!') : updateScore(player,player_score,'YOU WIN!');
                 }
                 if(player.choice.getAttribute('value') == 'PAPER'){
-                    if(machine.choice.getAttribute('value') == 'SCISSORS'){
-                        updateScore(machine,document.getElementById('cpu_score'),'YOU LOOSE!');
-                    }else{
-                        updateScore(player,document.getElementById('player_score'),'YOU WIN!');
-                    }
+                    machine.choice.getAttribute('value') == 'SCISSORS' ?  updateScore(machine,cpu_score,'YOU LOOSE!') : updateScore(player,player_score,'YOU WIN!');  
                 }
                 if(player.choice.getAttribute('value') == 'SCISSORS'){
-                    if(machine.choice.getAttribute('value') == 'ROCK'){
-                        updateScore(machine,document.getElementById('cpu_score'),'YOU LOOSE!');
-                    }else{
-                        updateScore(player,document.getElementById('player_score'),'YOU WIN!');
-                    }
+                   machine.choice.getAttribute('value') == 'ROCK' ? updateScore(machine,cpu_score,'YOU LOOSE!') : updateScore(player,player_score,'YOU WIN!');
                 }
                 //Case Someone Wins to print the result and disable game buttons
                 if(player.score == numberOfGames || machine.score == numberOfGames){
                     let winner = player.score == numberOfGames ? 'Player' : 'CPU';
                     result.innerHTML = `GAME OVER: ${winner} WINS`;
                     player_buttons.forEach(element => {
-                element.setAttribute('disabled','true');
-
-            });
+                        element.setAttribute('disabled','true');
+                    });
                 }
             }
-            console.log('Player: ' + player.score + ' - ' + machine.score + ' :Machine');
         }
 
         /*Updates the scoreboard of the game.

@@ -21,24 +21,8 @@ h1,h2,h3,h4{
     color: darkgoldenrod;
 }
 
-#game-box{
-    width: 100%;
-    position: relative;
-    display: flex;
-}
 
-#game-box #screen{
-    position: relative;
-    background-color:#49DEB4;
-    width: 70%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 1%;
-    padding-bottom: 5%;
-}
+/*SCORE*****************************************************/
 
 #score{
     left: 1%;
@@ -72,10 +56,36 @@ h1,h2,h3,h4{
     font-size: 1.125rem;
 }
 
+
+
 #number_of_games{
-   font-family: 'Nabla', display;
-   font-size: 0.75rem;
+    font-family: 'Nabla', display;
+    font-size: 0.75rem;
+ }
+
+/*------------------------------------------------------------*/
+
+/*GAME BOX*******************************************************/
+
+#game-box{
+    width: 100%;
+    position: relative;
+    display: flex;
 }
+
+#game-box #screen{
+    position: relative;
+    background-color:#49DEB4;
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 1%;
+    padding-bottom: 5%;
+}
+
 
 #game_result{
     visibility: hidden;
@@ -88,45 +98,10 @@ h1,h2,h3,h4{
     color:#CB49DE;
 }
 
-#container{
-    width: 500px;
-    background-color:#49DE60;
-    margin: 0 auto;
-    padding: 1%;
-}
+/*------------------------------------------------------------*/
 
-#container *{
-    box-sizing: border-box;
-}
+/*ACTIONS*****************************************************/
 
-#container h1,#player_choice_container h3{
-text-align: center;
-color:#DE496C;
-}
-
-#player_choice_container{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-
-
-#player_choice_container button,#confirm{
-    position: relative;
-   display: flex;
-   flex-direction: column;
-   background-color:#CB49DE;
-   color: #49deb4;
-   border:unset;
-   border-radius: 5px;
-   padding:2%;
-
-}
-/**************************/
 #actions .game_button{
     visibility: hidden;
     display: none;
@@ -173,7 +148,16 @@ hasta que el usuario deja de interactuar con el elemento
   }
 
 
-  #match_numbers{
+  
+#match_numbers #cancel{
+    visibility: visible;
+}
+
+#match_numbers h3{
+grid-column: 1/4;
+}
+
+#match_numbers{
     overflow-y:scroll;
     width: 100%;
     display: grid;
@@ -182,7 +166,16 @@ hasta que el usuario deja de interactuar con el elemento
     grid-template-columns: auto auto auto;
   }
 
-  #cancel_game,#confirm{
+
+  #start,#cancel_game{
+    position: relative;
+    font-family: 'Nabla', display;
+    font-size: 1.25rem;
+    z-index: 10;
+}
+
+
+#cancel_game,#confirm{
     display: block;
 }
 
@@ -194,39 +187,9 @@ hasta que el usuario deja de interactuar con el elemento
     align-items: center;
   }
 
-    /* #match_numbers  #confirm{
-        /*visibility: visible;*/
-        /*grid-column: 1/2;
-    } */
+/*-----------------------------------------------------------*/
 
-    #match_numbers #cancel{
-        visibility: visible;
-    }
-
-  #match_numbers h3{
-    grid-column: 1/4;
-  }
-
-
-  .choice-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-
-#player_choice_container button i{
-    font-size: 3rem;
- }
-
-#start,#cancel_game{
-    position: relative;
-    font-family: 'Nabla', display;
-    font-size: 1.25rem;
-    z-index: 10;
-}
-
-
+/*GAME OPTIONS************************************************/
 
 #game_options{
     position: relative;
@@ -257,3 +220,68 @@ hasta que el usuario deja de interactuar con el elemento
     };
     
 }
+
+
+
+/*-----------------------------------------------------------*/
+
+
+
+
+
+#container{
+    width: 500px;
+    background-color:#49DE60;
+    margin: 0 auto;
+    padding: 1%;
+}
+
+#container *{
+    box-sizing: border-box;
+}
+
+#container h1,#player_choice_container h3{
+text-align: center;
+color:#DE496C;
+}
+
+#player_choice_container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+#player_choice_container button,#confirm{
+    position: relative;
+   display: flex;
+   flex-direction: column;
+   background-color:#CB49DE;
+   color: #49deb4;
+   border:unset;
+   border-radius: 5px;
+   padding:2%;
+
+}
+/**************************/
+
+  .choice-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10%;
+  }
+
+
+#player_choice_container button i{
+    font-size: 3rem;
+ }
+
+
+
+
+
